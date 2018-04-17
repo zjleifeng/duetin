@@ -690,15 +690,36 @@ class AllSongMusic_Popular_Serializer(serializers.ModelSerializer):
     photo = serializers.SerializerMethodField()
     all_gif_url = serializers.SerializerMethodField()
     vedio = serializers.SerializerMethodField()
-
+    play_time=serializers.SerializerMethodField()
     class Meta:
         model = AllSongMusic
         fields = (
             'id', 'title', 'music_info', 'auth_part_userid', 'auth_part_username','auth_part_jpg','auth_part_resume',
             'auth_part_tx', 'participant_part_userid', 'participant_part_username', 'participant_part_tx', 'photo',
-            'all_gif_url','participant_part_jpg','participant_part_resume',
+            'all_gif_url','participant_part_jpg','participant_part_resume','play_time',
             'vedio', 'rank', 'share_count', 'praise_count', 'view_count', 'comment_count', 'created_at', 'is_praise')
         depth = 2
+
+    def get_play_time(self,obj):
+
+        music_info=obj.music_info
+        if music_info:
+
+            part_a=music_info.time_a
+            part_b=music_info.time_b
+            if part_a>part_b:
+                if (part_b-3000)>0:
+                    play_time=part_b-3000
+                else:
+                    play_time=0
+            else:
+                if (part_a-3000)>0:
+                    play_time=part_a-3000
+                else:
+                    play_time=0
+            return play_time
+        else:
+            return 0
 
     def get_comment_count(self, obj):
         return obj.all_music_comment.count()
