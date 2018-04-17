@@ -1,0 +1,94 @@
+<script type="text/javascript" src="/static/operate/jquery-1.2.6.pack.js"></script>
+<script> var jq126 = $.noConflict(true); </script>
+<script type="text/javascript" src="/static/operate/jquery.imagePreview.1.0.js"></script>
+<script type="text/javascript">
+
+    jq126(function () {
+
+        $("a.preview").preview();
+    });
+
+</script>
+
+<tr>
+    
+    <td>{{ obj.mobile_brand }} </td>
+    <td>{{ obj.mobile_name }}</td>
+    <td>{% if obj.mobile_version %}{{ obj.mobile_version }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% if obj.mobile_edition %}{{ obj.mobile_edition }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% if obj.mobile_yj_name %}{{ obj.mobile_yj_name }}{% else %}{{ "" }}{% endif %}</td>
+    <td>
+        <div id="labdelaytime{{ obj.id }}">{{ obj.delay_time }}</div>
+    </td>
+
+<td>
+            <div><a href="{{ obj.part_aac.aac_yp }}" download="aac">{% if obj.part_aac.aac_yp %}下载{% else %}{% endif %}</a></div>
+
+    </td>
+<td>
+            <div><a href="{{ obj.part_aac.banzou }}" download="banzou">{% if obj.part_aac.banzou %}下载{% else %}{% endif %}</a></div>
+
+    </td>
+    <td><a title="更改" href="#delModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+
+        <div class="modal small fade" id="delModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="editmodelform{{ obj.id }}" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改手机延迟</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改手机 <a
+                                    style="color: red">{{ obj.mobile_version }}</a>的延迟数<br>
+                            </p> <br> <br>
+                            <div><label style="width: 120px"><a>延迟毫秒数:</a></label><input type="text" name="delay_time"
+                                                                                         value="{{ obj.delay_time }}" onkeyup="value=value.replace(/[^\d]/g,'') "
+                                                                                            ng-pattern="/[^a-zA-Z]/">
+                            </div>
+
+
+                        </div>
+                        <input type="hidden" name="__next__" value="{{ page }}">
+
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal" onclick="editform('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+</tr>
+
+<script type="text/javascript">
+    function editform(data) {
+        $.ajax({
+
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/editmobilever/" + data + "/",
+
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+                $("#labdelaytime" + data + "").text(res_data.result['delaytime']);
+
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+
+</script>

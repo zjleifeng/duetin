@@ -1,0 +1,82 @@
+redis数据库配置说明
+0：好友关系数据，永久保存
+1：各级页面缓存，缓存时间settings设置
+3：celery执行缓存数据
+4：token缓存数据
+5：某视频被播放总次数实时更新到页面,数据保存
+6：定时任务，小时点击量更新保存到MYSQL。数据定时清理
+
+
+
+fcli
+mks demo，创建名为“demo”的服务。执行cd demo进入服务“demo”内
+在code目录下建一个test.py文件，写函数，例如函数名字为my_handler
+上传文件到函数服务器，例如在服务demo下简历一个名字为world的函数，并且上传test.py函数语言python2.7
+mkf world -h test.my_handler -d code -t python2.7
+执行函数
+invk world
+
+
+安装沙盒环境
+cd 到fcli目录
+进入沙盒
+docker pull cellofellow/ffmpeg
+
+docker run -it -v code:/code python:2.7 bash
+安装所需软件
+pip install -e 'git+https://github.com/deepgram/sidomo.git#egg=sidomo'
+
+
+supervisord配置
+
+
+[program:uwsgi]
+command = uwsgi --ini /var/www/khufu/khufu_uwsgi.ini
+stopsignal=QUIT
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/uwsgi/supervisor_linuxidc.log
+stderr_logfile=/var/log/uwsgi/supervisor_linuxidc_err.log
+
+[program:celery]
+directory=/var/www/khufu/
+command=celery -A khufu worker --loglevel=info
+
+
+stdout_logfile=/var/log/uwsgi/celery_linuxidc.log
+stderr_logfile=/var/log/uwsgi/celery_linuxidc_err.log
+
+autostart=true
+
+autorestart=true
+
+redirect_stderr=true
+
+stopsignal=QUIT
+
+
+
+[program:uwsgi]
+command = uwsgi --ini /var/www/khufu/khufu_uwsgi.ini
+stopsignal=QUIT
+autostart=true
+autorestart=true
+stdout_logfile=/var/log/uwsgi/supervisor_linuxidc.log
+stderr_logfile=/var/log/uwsgi/supervisor_linuxidc_err.log
+
+[program:celery]
+directory=/var/www/khufu/
+command=celery -A khufu worker --loglevel=info
+
+
+stdout_logfile=/var/log/uwsgi/celery_linuxidc.log
+stderr_logfile=/var/log/uwsgi/celery_linuxidc_err.log
+
+autostart=true
+
+autorestart=true
+
+redirect_stderr=true
+
+stopsignal=QUIT
+

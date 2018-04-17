@@ -1,0 +1,38 @@
+
+@charset "utf-8";
+/* CSS Document */
+html, body,div,ul,li,ol,p,b,h1,h2,h3,h4,h5,h6 {margin: 0; padding: 0;border: 0;outline: 0;  font-family: Microsoft YaHei, Tahoma, Arial,sans-serif;font-size: 100%;vertical-align: baseline;background: transparent;list-style: none;}
+body,html{ height: 100%;width:100%;}
+body{font-size: 12px;;margin: 0 auto;color: #221713;height: 100%;}
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }    /*清除浮动css3*/
+textarea,select{-webkit-appearance: none; -moz-appearance: none; -o-appearance: none; appearance: none;}
+input::-webkit-input-placeholder{color:#AAAAAA;}  /*修改placeholder的默认颜色*/
+input:focus::-webkit-input-placeholder{color:#EEEEEE;}
+img{border:none;}
+i,em{font-style: normal}
+input,button{outline: none;border:none; font-family: Microsoft YaHei, Tahoma, Arial, sans-serif;}
+*:focus { outline: none; }
+.clear {clear: both;}
+*{ margin: 0; padding:0; -webkit-tap-highlight-color: transparent;box-sizing:border-box }
+/* 去除iPhone中默认的input样式 */
+input[type="submit"], input[type="reset"], input[type="button"]{
+    -webkit-appearance: none;
+    resize: none;
+}
+/* 取消链接高亮  */
+body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-family: Microsoft YaHei, Tahoma, Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+    color: #525252;
+    font-family: Microsoft YaHei, '宋体', Tahoma, Arial, sans-serif;
+    font-weight:normal;
+    text-shadow:none;
+}
+/* 图片自适应 */
+img {
+    border: none;
+    -ms-interpolation-mode: bicubic;/*为了照顾ie图片缩放失真*/
+}

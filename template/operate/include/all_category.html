@@ -1,0 +1,146 @@
+<script type="text/javascript" src="/static/operate/jquery-1.2.6.pack.js"></script>
+<script> var jq126 = $.noConflict(true); </script>
+<script type="text/javascript" src="/static/operate/jquery.imagePreview.1.0.js"></script>
+<script type="text/javascript">
+
+    jq126(function () {
+
+        $("a.preview").preview();
+    });
+
+</script>
+
+<tr>
+    <td>{{ obj.id }}</td>
+    <td>
+
+        <a class="preview" name="{{ obj.photo }}" title="{{ obj.auth_part_username }}:{{ obj.music_info.music_name }}">
+            <img width="25" src="https://s3-ap-southeast-1.amazonaws.com/duetin/favicon.png"/>
+        </a>
+
+    </td>
+
+    <td>
+
+        <a title="播放" href="#playModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-play-circle"></i></a>
+
+        <div class="modal small fade" id="playModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+
+                    <div id="{{ obj.id }}"></div>
+                    <script type="text/javascript" src="/static/operate/ckplayer/ckplayer.js" charset="utf-8"></script>
+                    <script type="text/javascript">
+                        var flashvars = {
+                            f: '{{ obj.vedio }}',
+                            c: 0,
+                            p: 1
+                        };
+                        var params = {
+                            bgcolor: '#FFF',
+                            allowFullScreen: true,
+                            allowScriptAccess: 'always',
+                            wmode: 'transparent'
+                        };
+                        CKobject.embedSWF('/static/operate/ckplayer/ckplayer.swf', '{{ obj.id }}', 'ckplayer_{{ obj.id }}', '600', '400', flashvars, params);
+                    </script>
+
+
+                </div>
+            </div>
+        </div>
+
+    </td>
+
+
+    <td>{% if obj.music_info %}{{ obj.music_info.music_name }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% if obj.participant_part_username %}{{ obj.participant_part_username }}({{ obj.participant_part }}){% else %}
+        {{ "" }}{% endif %}</td>
+    <td>{% if obj.auth_part_username %}{{ obj.auth_part_username }}({{ obj.auth_part }}){% else %}
+        {{ "" }}{% endif %}</td>
+
+    <td>{{ obj.music_info.music_style }}</td>
+
+    <td>{{ obj.view_count }}</td>
+    <td>{{ obj.rank }}</td>
+    <td>{{ obj.view_count_rank }}</td>
+    <td><div id="labcat{{ obj.id }}">{{ obj.category }}</div></td>
+    <td><a title="更改" href="#editModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+
+        <div class="modal small fade" id="editModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="editmodelform{{ obj.id }}" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改作品信息</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改作品 <a
+                                    style="color: red">{{ obj.auth_part_username }}:{{ obj.music_info.music_name }}</a>信息<br>
+                            </p> <br> <br>
+
+
+                            <div><label style="width: 120px"><a>分类:</a></label>
+                                <select name="all_category" style="width:150px;height: 24px;overflow: hidden;">
+
+
+                                    <option id="d" selected="selected"
+                                            value="{{ obj.all_category.id }}">{{ obj.category }}</option>
+                                    <option id="d"
+                                            value="">不设置</option>
+
+                                    {% for category in obj_singer %}
+                                        <option id="d" value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+
+
+                                </select>
+                            </div>
+                            <input type="hidden" name="__next__" value="{{ page }}">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal"
+                                    onclick="editform('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+</tr>
+
+<script type="text/javascript">
+    function editform(data) {
+
+        $.ajax({
+
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/editcategory/" + data + "/",
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+
+                $("#labcat" + data + "").text(res_data.result['all_category']);
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+
+</script>

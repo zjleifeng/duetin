@@ -1,0 +1,576 @@
+/*--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+--*/
+/*--- header ----*/
+
+/* =========================================
+   11. Section Subscribe
+========================================= */
+.subscribe {
+    text-align: center;
+}
+
+.subscribe .subscribe-form input {
+    width: 100%;
+    margin: auto;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+
+.subscribe .social {
+    margin: auto;
+    display: table;
+}
+
+.subscribe .social li {
+    float: left;
+    list-style: none;
+    margin-right: 100px;
+    width: 80px;
+    height: 80px;
+}
+
+.subscribe .social li img{
+	width: 80px;
+	height: 80px;
+}
+
+
+.header
+{
+	background-size:cover;
+	height:1080px;
+}
+
+.header-nav
+{
+	float:left;
+	margin-top: 5%;
+	/*margin-right: 0px;*/
+	/*margin-left: -20%;*/
+}
+
+
+.header-nav ul li
+{
+	font-size:24px;
+	display:inline-block;
+}
+.header-nav ul li a
+{
+	margin-left:  1em;
+	margin-right:  1em;
+	text-decoration: none;
+}
+
+.mobile-divise
+{
+	text-align: center;
+	margin-top: 11%;
+	float: right;
+	width: 436px;
+	height: 757px;
+	background-image: url('../images/iphone.png');
+}
+
+
+.divise-info
+{
+	color: #FFFFFF;
+	height: 373px;
+	margin-top: 40%;
+}
+
+.divise-info h1
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight:700;
+	font-size:60px;
+}	
+.divise-info span
+{
+	display:block;
+}
+
+.iphone_img{
+    width: 436px;
+    height: 757px;
+
+}
+
+.iphone_video{
+	position: absolute;
+	/*margin-top: 32%;*/
+    width: 270px;
+    height: 478px;
+	margin-top: 139px;
+	margin-left: -135px;
+
+}
+
+#about_row{
+    margin-top: 17%;
+}
+
+#contactus_row{
+    margin-top: 22%;
+}
+.divise-info p
+{
+	font-family: 'Open Sans', sans-serif;
+	font-size:30px;
+	margin-top:8%;
+}
+.divise-info p span
+{
+	display:block;
+}
+
+.divise-info img
+{
+	margin-top: 13px;
+}
+
+#title
+{
+	font-size:64px;
+}
+
+.divise-info p.text
+{
+	color:#B4B3B3;
+	font-family: 'Open Sans', sans-serif;
+	font-size:14px;
+	margin-top: 7%;
+}
+.divise-info p.text span
+{
+	display:block;
+}
+.header-bg
+{
+	min-height:1080px;
+}
+
+.contace_table{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.contace_table tbody{
+	color: white;
+}
+
+.contace_table td{
+	float: right;
+	font-size: 40px;
+	font-weight: 300;
+	margin-left: 80px;
+}
+
+.contace_table th{
+	float: left;
+	font-size: 40px;
+	font-weight: 700;
+}
+
+
+/*--- footer ---*/
+.footer
+{
+	background:white;
+	padding:2% 0;
+    height: 12%;
+}
+
+
+
+/*----- responsive-design ------*/
+@media (max-width:1280px)
+{
+	.divise-info h1 
+	{
+		font-size: 50px;
+	}
+	.divise-info p 
+	{
+		font-size: 16px;
+	}
+
+}
+@media (max-width:1024px)
+{
+
+	.mobile-divise
+	{
+		text-align: center;
+		margin-top: 5%;
+		float: left;
+		width: 436px;
+		height: 757px;
+		background-image: url('../images/iphone.png');
+	}
+	/*.mobile-divise*/
+	/*{*/
+		/*display: none;*/
+	/*}*/
+
+	.header-logo h2 a
+	{
+		font-size: 43px;
+	}
+	.header-nav ul li a
+	{
+		color:lightgray;
+		margin: 0 1.5em;
+	}
+
+	.divise-info h1
+	{
+		font-size: 45px;
+	}
+
+	.divise-info p
+	{
+		margin-top: 4%;
+	}
+
+	.subscribe .social li {
+		float: left;
+		list-style: none;
+		margin-right: 40px;
+		width: 60px;
+		height: 60px;
+	}
+
+	.subscribe .social li img{
+		width: 60px;
+		height: 60px;
+	}
+
+	#icon_img{
+		width: 300px;
+		height: 100px;
+	}
+
+	/*.divise-info*/
+	/*{*/
+		/*color: #FFFFFF;*/
+		/*margin-top: 40%;*/
+	/*}*/
+
+}
+@media (max-width:768px)
+{
+	/*----- resposnive-menu -----*/
+
+
+	.mobile-divise
+	{
+	display: none;
+	}
+	.mobile-divise
+	{
+		text-align: center;
+		margin-top: 5%;
+		float: left;
+		width: 436px;
+		height: 757px;
+		background-image: url('../images/iphone.png');
+	}
+
+	.divise-info
+	{
+		color: #FFFFFF;
+		height: 273px;
+		margin-top: 30%;
+		width: 768px;
+	}
+
+	#icon_img{
+		width: 300px;
+		height: 100px;
+	}
+	.divise-info h1
+	{
+		font-family: 'Open Sans', sans-serif;
+		font-weight:700;
+		font-size:40px;
+	}
+	.divise-info span
+	{
+		display:block;
+	}
+
+	.header-nav
+	{
+		float:left;
+		margin-top: 5%;
+		/*margin-right: 0px;*/
+		/*margin-left: -20%;*/
+	}
+
+
+	.header-nav ul li
+	{
+		font-size:24px;
+		display:inline-block;
+	}
+	.header-nav ul li a
+	{
+		margin-left:  1em;
+		margin-right:  1em;
+	}
+
+	.mobile-divise
+	{
+		width: 50%;
+		margin: 11% auto;
+		float: left;
+	}
+
+	.divise-info
+	{
+		margin-top: 7%;
+		text-align: center;
+		float: left;
+	}
+	.divise-info  h1
+	{
+		color:#1C8DD5;
+	}
+	.divise-info h1
+	{
+		font-size: 40px;
+	}
+	.divise-info p
+	{
+		font-size: 14px;
+	}
+
+	.divise-info p.text
+	{
+		font-size: 13px;
+	}
+
+	.subscribe .social li {
+		float: left;
+		list-style: none;
+		margin-right: 40px;
+		width: 70px;
+		height: 70px;
+	}
+
+	.header-bg
+	{
+		min-height:680px;
+		background-color: #1C8DD5;
+	}
+
+}
+@media (max-width:640px)
+{
+	.divise-info
+	{
+		color: #FFFFFF;
+		height: 273px;
+		margin-top: 30%;
+		width: 540px;
+	}
+
+	.mobile-divise
+	{
+		display: none;
+	}
+	.header-nav ul
+	{
+		padding: 1.5% 0;
+		margin: 0;
+		width: 500px;
+	}
+	.mobile-divise
+	{
+		margin: 11% auto;
+		width: 50%;
+        position: relative;
+	}
+	.mobile-divise img
+	{
+		width: 100%;
+	}
+
+	.subscribe .social li {
+		float: left;
+		list-style: none;
+		margin-right: 40px;
+		width: 40px;
+		height: 40px;
+	}
+
+	.subscribe .social li img{
+		width: 60px;
+		height: 60px;
+	}
+
+	.header-bg
+	{
+		min-height:680px;
+		background-color: #1C8DD5;
+	}
+
+	.contace_table td{
+		float: right;
+		font-size: 30px;
+		font-weight: 300;
+		margin-left: 40px;
+	}
+
+	.contace_table th{
+		float: left;
+		font-size: 30px;
+		font-weight: 700;
+	}
+}
+@media (max-width:480px)
+{
+	.divise-info
+	{
+		color: #FFFFFF;
+		height: 273px;
+		margin-top: 30%;
+		width: 380px;
+	}
+
+	.mobile-divise
+	{
+		display: none;
+	}
+	.header-nav ul
+	{
+		width: 380px;
+	}
+
+	.header-nav ul li.active a
+	{
+		padding: .4em 1em;
+	}
+
+	.subscribe .social li {
+		float: left;
+		list-style: none;
+		margin-right: 40px;
+		width: 40px;
+		height: 40px;
+	}
+
+	.subscribe .social li img{
+		width: 50px;
+		height: 50px;
+	}
+
+
+	.header-nav ul li
+	{
+		font-size:18px;
+		display:inline-block;
+	}
+	.header-nav ul li a
+	{
+		margin-left:  0.5em;
+		margin-right:  0.5em;
+		text-decoration: none;
+	}
+
+	.header-bg
+	{
+		min-height:680px;
+		background-color: #1C8DD5;
+	}
+
+	.contace_table td{
+		float: right;
+		font-size: 25px;
+		font-weight: 300;
+		margin-left: 40px;
+	}
+
+	.contace_table th{
+		float: left;
+		font-size: 25px;
+		font-weight: 700;
+	}
+
+}
+@media (max-width:320px)
+{
+
+	.mobile-divise
+	{
+		display: none;
+	}
+	.divise-info h1
+	{
+		font-size: 30px;
+	}
+	.divise-info p
+	{
+		font-size: 12px;
+	}
+
+	.divise-info p.text
+	{
+		font-size: 12px;
+	}
+
+	.subscribe .social li {
+		float: left;
+		list-style: none;
+		margin-right: 40px;
+		width: 40px;
+		height: 40px;
+	}
+
+	.subscribe .social li img{
+		width: 40px;
+		height: 40px;
+	}
+
+
+	.header-nav ul li
+	{
+		font-size:18px;
+		display:inline-block;
+	}
+	.header-nav ul li a
+	{
+		margin-left:  0.5em;
+		margin-right:  0.5em;
+		text-decoration: none;
+	}
+
+	.header-bg
+	{
+		min-height:480px;
+		background-color: #1C8DD5;
+	}
+
+	.contace_table td{
+		float: right;
+		font-size: 25px;
+		font-weight: 300;
+		margin-left: 30px;
+	}
+
+	.contace_table th{
+		float: left;
+		font-size: 25px;
+		font-weight: 700;
+	}
+
+}
+
+

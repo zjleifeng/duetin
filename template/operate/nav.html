@@ -1,0 +1,102 @@
+<style>
+.cur{ background:#D96C00; font-weight:bold;}
+
+</style>
+<div class="sidebar-nav tablefont">
+    <ul class="menu" id="menu">
+        <li><a href="#" data-target=".dashboard-menu" class="nav-header" data-toggle="collapse"><i
+                class="glyphicon glyphicon-user"></i> 用户管理<i class="fa fa-collapse"></i></a></li>
+        <li>
+            <ul class="dashboard-menu nav nav-list collapse in">
+                <li><a href="/operate/userrecord/"><span class="fa fa-caret-right"></span> 用户管理</a></li>
+            </ul>
+        </li>
+        <li><a href="#" data-target=".premium-menu" class="nav-header collapsed" data-toggle="collapse"><i
+                class="glyphicon glyphicon-hdd"></i> 歌曲管理<i class="fa fa-collapse"></i></a></li>
+        <li>
+            <ul class="premium-menu nav nav-list collapse in">
+                <li><a href="/operate/musicrecord/"><span class="fa fa-caret-right"></span> 歌曲管理</a></li>
+                             <li ><a href="/operate/musicoperate/"><span class="fa fa-caret-right"></span> 被唱过歌曲</a></li>
+                            <li ><a href="/operate/musicnooperate/"><span class="fa fa-caret-right"></span> 未被唱过歌曲</a></li>
+                                <li><a href="/operate/song_case/"><span class="fa fa-caret-right"></span> 歌曲问题反馈</a></li>
+
+            </ul>
+        </li>
+        <li><a href="#" data-target=".legal-menu" class="nav-header collapsed" data-toggle="collapse"><i
+                class="glyphicon glyphicon-briefcase"></i> 作品管理<i class="fa fa-collapse"></i></a></li>
+        <li>
+            <ul class="legal-menu nav nav-list collapse in">
+                <li><a href="/operate/postrecord/"><span class="fa fa-caret-right"></span> 作品管理</a></li>
+                <li><a href="/operate/daypostrecord/"><span class="fa fa-caret-right"></span> 一天内作品</a></li>
+                <li><a href="/operate/allpostrecord/"><span class="fa fa-caret-right"></span> 合唱作品</a></li>
+                <li><a href="/operate/partscore/"><span class="fa fa-caret-right"></span> 星级评分</a></li>
+                <li><a href="/operate/category_set/"><span class="fa fa-caret-right"></span> 作品类别管理</a></li>
+                <li><a href="/operate/category/"><span class="fa fa-caret-right"></span> 用户作品分类</a></li>
+                <li ><a href="/operate/manualpost/"><span class="fa fa-caret-right"></span> 手动合成数据</a></li>
+
+            </ul>
+        </li>
+        <li><a href="#" data-target=".up-menu" class="nav-header collapsed" data-toggle="collapse"><i
+                class="glyphicon glyphicon-circle-arrow-up"></i>推荐管理<i class="fa fa-collapse"></i></a></li>
+        <li>
+            <ul class="up-menu nav nav-list collapse in">
+
+                <li><a href="/operate/sing-recommend/"><span class="fa fa-caret-right"></span>点歌推荐</a></li>
+                <li><a href="/operate/newsing-recommend/"><span class="fa fa-caret-right"></span>最新歌曲推荐</a></li>
+                <li><a href="/operate/top50-recommend/"><span class="fa fa-caret-right"></span>TOP50排序</a></li>
+                <li><a href="/operate/newuser-recommend/"><span class="fa fa-caret-right"></span>新用户作品推荐</a></li>
+                <li><a href="#"><span class="fa fa-caret-right"></span>BANNER-1</a></li>
+                <li><a href="#"><span class="fa fa-caret-right"></span>BANNER-2</a></li>
+                <li><a href="#"><span class="fa fa-caret-right"></span>其他推荐</a></li>
+            </ul>
+        </li>
+         <li><a href="#" data-target=".accounts-menu" class="nav-header collapsed" data-toggle="collapse"><i
+                class="glyphicon glyphicon-cog"></i> 其他设置 <i class="fa fa-collapse"></i></a></li>
+        <li>
+            <ul class="accounts-menu nav nav-list collapse in">
+                <!--<li><a href="/operate/postdata/" target="_blank"><span class="fa fa-caret-right"></span>视频合成原始数据</a></li>-->
+
+                <li><a href="/operate/up-mobilejson/" target="_blank"><span class="fa fa-caret-right"></span>上传手机信息</a>
+                </li>
+                <li><a href="/operate/mobilever/"><span class="fa fa-caret-right"></span>手机延迟管理</a></li>
+                <li><a href="/operate/up-singer/" target="_blank"><span class="fa fa-caret-right"></span>上传歌手信息</a></li>
+
+                <li><a href="/operate/up-music/" target="_blank"><span class="fa fa-caret-right"></span>上传歌曲信息</a></li>
+                                <li><a href="/operate/up-musictime/" target="_blank"><span class="fa fa-caret-right"></span>更新歌曲时间信息</a></li>
+
+                <li><a href="/operate/conversion/" target="_blank"><span class="fa fa-caret-right"></span>歌手uid转换</a></li>
+
+                <li><a href="/operate/checkdb/" style="color: red"><span class="fa fa-caret-right"></span>检索数据库错误(慎用)
+                </a></li>
+                <li><a href="#"><span class="fa fa-caret-right"></span>其他</a></li>
+
+
+            </ul>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+
+  var urlstr = location.href;
+
+  //alert((urlstr + '/').indexOf($(this).attr('href')));
+
+  var urlstatus=false;
+
+  $("#menu a").each(function () {
+
+    if ((urlstr + '/').indexOf($(this).attr('href')) > -1&&$(this).attr('href')!='') {
+
+      $(this).addClass('cur'); urlstatus = true;
+
+    } else {
+
+      $(this).removeClass('cur');
+
+    }
+
+  });
+
+  if (!urlstatus) {$("#menu a").eq(0).addClass('cur'); }
+
+</script>

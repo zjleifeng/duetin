@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>Duetin Music</title>
+    <link href="/static/duetindefault/images/favicon/favicon.png" rel="shortcut icon">
+    <link rel="stylesheet" href="/static/share/css/base.css">
+    <link rel="stylesheet" href="/static/share/css/main.css">
+</head>
+<body style="background-color: #fff">
+<div class="root">
+    <div class="content">
+        <div id="Video">
+            <div class="video-box" onclick="start2()">
+                <div class="mark">
+                </div>
+                <div class="play-button"></div>
+            </div>
+        </div>
+        <div id="rightInfo">
+            <div class="btnarea">
+                <h3 class="slogan">Want to make your own musicals?</h3>
+                <a href="javascript:;" class="download">
+                    安卓下载
+                </a>
+            </div>
+            <div class="summary">
+
+            </div>
+            <div class="author">
+                <div class="author-head">
+                    <div class="author-head_left">
+                        <span></span>
+                        <p>Momchristy</p>
+                    </div>
+                    <div class="author-head_right">
+                        <span></span>
+                        <p>Momchristy</p>
+                    </div>
+                </div>
+                <p class="author-summary">Bukan mencari banyak tp mengejar berkah</p>
+            </div>
+        </div>
+    </div>
+    <footer class="foot">
+        Copyright @2017-2020 Duetin. All Rights Reserved
+    </footer>
+</div>
+<div class="s-root">
+    <header class="s-head">
+        <div class="s-head-left">
+        </div>
+        <div class="s-head-right">
+            打开应用
+        </div>
+    </header>
+    <div class="s-video-box" onclick="start()">
+        <div class="play-button"></div>
+    </div>
+    <div class="s-author">
+        <div class="s-author-head">
+            <div class="s-author-head_left">
+                <span></span>
+                <p>Momchristy</p>
+            </div>
+            <div class="s-author-head_right">
+                <span></span>
+                <p>Momchristy</p>
+            </div>
+        </div>
+        <p class="s-author-summary">Bukan mencari banyak tp mengejar berkah</p>
+    </div>
+    <div class="s-more">
+        <div class="s-more_title">more</div>
+        <ul class="s-more_cont" id="more_cont">
+        </ul>
+    </div>
+    <div class="s-download">
+        下载应用
+    </div>
+</div>
+</body>
+<script src="/static/share/js/jquery-2.1.4.min.js"></script>
+<script src="/static/share/js/iphone-inline-vide.js"></script>
+<script>
+    if ($(window).width() < 750) {
+        $('.root').remove();
+    } else {
+        $('.s-root').remove();
+    }
+</script>
+<script src="/static/share/js/template-web.js"></script>
+<script type="text/html" id="test">
+    {#    {{each recommend as value}}#}
+
+    {% for value in recommend %}
+    <li class="cont-video">
+        <a href="../{{value.id}}">
+            <img src="/static/share/img/play.png" alt="" class="cont-video-play">
+
+            <img src={{value.photo}} alt="" class="cont-video-img">
+
+        </a>
+    </li>
+
+    {% endfor %}
+    {#    {{/each}}#}
+</script>
+<script src="/static/share/js/main.js"></script>
+<script>
+
+    var isPlay = false;
+    var author_left = $('.s-author-head_left');
+    var author_right = $('.s-author-head_right');
+    var M_author_left = $('.author-head_left');
+    var M_author_right = $('.author-head_right');
+
+//    var teststr=recommend;
+
+    var str = location.href;
+    var reg = new RegExp(/\/[0-9]+/);
+    var id = parseInt((String(reg.exec(str))).replace(/\//g, ''))||10166;
+    $.ajax({
+//        url:'http://duetin.com/api/v1/music/allmusic_share_j/'+id,
+        url:'http://duetin.com/api/v1/music/allmusic_share_j/'+id+'/',
+        type: 'get',
+        datatype: 'json',
+        success: function (data) {
+            if (data.msg == 'ok') {
+                var data = data.result;
+                if ($(window).width() < 750) {
+                    $('.s-video-box').css("background-image", "url(" + data.app_share_jpg + ")");
+                    if (data.is_chorus) {
+                        author_left.find('span').css("backgroundImage", "url(" + data.participant_part_tx + ")");
+                        author_left.find('p').html(data.participant_part_username);
+                        author_right.find('span').css("backgroundImage", "url(" + data.auth_part_tx + ")");
+                        author_right.find('p').html(data.auth_part_username);
+                    } else {
+                        author_left.find('span').css("backgroundImage", "url(" + data.auth_part_tx + ")");
+                        author_left.find('p').html(data.auth_part_username);
+                        author_right.remove();
+                    }
+
+                    if (data.music_info.singer.length == 1 || data.music_info.singer[1].singer_name == "") {
+                        $("<p><img src='/static/share/img/phone-share-music.jpg'><span style='padding-right: 10px'>" + data.music_info.singer[0].singer_name + "</span><span>" + data.music_info.music_name + "</span></p>").appendTo('.s-video-box');
+                    }
+                    else {
+                        $("<p><img src='/static/share/img/phone-share-music.jpg'><span style='padding-right: 10px'>" + data.music_info.singer[0].singer_name + "</span><span style='padding-right: 10px'>" + data.music_info.singer[1].singer_name + "</span><span>" + data.music_info.music_name + "</span></p>").appendTo('.s-video-box');
+                    }
+                    $("<div class='video' onclick='switchPlay(event)' style='display: none; height: 100%;background: #000'><video id='videoALL' x5-video-orientation='portraint'  loop='' x-webkit-airplay='allow' playsinline='true' x5-video-player-fullscreen='true' style='object-fit: contain; width: 100%; min-height: 100%; display: block;' preload='auto' webkit-playsinline='true' class='IIV'><source src='" + data.vedio + "' type='video/mp4'></video></div>").appendTo('.s-video-box');
+                    player = document.getElementById("videoALL");
+                    $('.s-author-summary').html(data.title);
+                    var test = template('test', data);
+                    $("#more_cont").append(test);
+                }
+
+                else {
+                    $('.video-box').css("background-image", "url(" + data.h5_share_jpg + ")");
+                    if (data.is_chorus) {
+                        M_author_left.find('span').css("backgroundImage", "url(" + data.participant_part_tx + ")");
+                        M_author_left.find('p').html(data.participant_part_username);
+                        M_author_right.find('span').css("backgroundImage", "url(" + data.auth_part_tx + ")");
+                        M_author_right.find('p').html(data.auth_part_username);
+                    } else {
+                        M_author_left.find('span').css("backgroundImage", "url(" + data.auth_part_tx + ")");
+                        M_author_left.find('p').html(data.auth_part_username);
+                        M_author_right.remove();
+                    }
+
+                    if (data.music_info.singer.length == 1 || data.music_info.singer[1].singer_name == "") {
+                        $("<p><img src='/static/share/img/web-share-music.jpg'><span style='padding-right: 15px'>" + data.music_info.singer[0].singer_name + "</span><span>" + data.music_info.music_name + "</span></p>").appendTo('.summary');
+                    }
+                    else {
+                        $("<p><img src='/static/share/img/web-share-music.jpg'><span style='padding-right: 15px'>" + data.music_info.singer[0].singer_name + "</span><span style='padding-right: 15px'>" + data.music_info.singer[1].singer_name + "</span><span>" + data.music_info.music_name + "</span></p>").appendTo('.summary');
+                    }
+
+                    $("<div class='video' onclick='switchPlay(event)' style='display: none; height: 100%;background: #000'><video id='videoALL' x5-video-orientation='portraint'  loop='' x-webkit-airplay='allow' playsinline='true' x5-video-player-fullscreen='true' style='object-fit: contain; width: 100%; min-height: 100%; display: block;' preload='auto' webkit-playsinline='true' class='IIV'><source src='" + data.vedio + "' type='video/mp4' ></video></div>").appendTo('.video-box');
+                    player = document.getElementById("videoALL");
+                }
+            }
+        }
+    });
+    function start() {
+        $(".s-video-box").css({paddingTop: 0, height: "-webkit-calc(100vh - 52px)", height: "calc(100vh - 52px)"})
+        $(".video").css('display', 'block');
+        player.play();
+        $('.play-button').css('display', 'none');
+        isPlay = true;
+    }
+
+    function start2() {
+        $(".video").css('display', 'block');
+        player.play();
+        $('.play-button').css('display', 'none');
+        isPlay = true;
+    }
+
+    function switchPlay(e) {
+        e.stopPropagation();
+        if (isPlay) {
+            player.pause();
+            $('.play-button').css('display', 'block');
+            isPlay = false;
+        } else {
+            player.play();
+            $('.play-button').css('display', 'none');
+            isPlay = true;
+        }
+    }
+</script>
+<!--<footer class="foot">-->
+        <!--Copyright @2017-2020 Duetin. All Rights Reserved-->
+    <!--</footer>-->
+</html>

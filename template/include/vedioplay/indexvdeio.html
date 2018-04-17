@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<title>dutein视频合唱</title>
+<link rel="stylesheet" type="text/css" href="/static/vedioplay/css/reset.css"/>
+<link rel="stylesheet" href="/static/vedioplay/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/static/vedioplay/css/willesPlay.css"/>
+<script src="/static/vedioplay/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/vedioplay/js/willesPlay.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div id="willesPlay">
+	<div class="playHeader">
+        {% if music_list %}
+		<div class="videoName">{{ music_list.title }}</div>
+        {% else %}
+            <div class="videoName">此视频已经被删除</div>
+        {% endif %}
+	</div>
+	<div class="playContent">
+		<div class="turnoff">
+			<ul>
+				<li><a href="http://www.justpy.cn" title="喜欢" class="glyphicon glyphicon-heart-empty"></a></li>
+				<li><a href="javascript:;" title="关灯" class="btnLight on glyphicon glyphicon-sunglasses"></a></li>
+				<li><a href="javascript:;" title="分享" class="glyphicon glyphicon-share"></a></li>
+			</ul>
+		</div>
+{% if music_list %}
+		<video poster="{{ music_list.photo }}" width="100%" height="100%" id="playVideo" controls="controls">
+			<source src="{{ music_list.vedio }}" type="video/mp4"></source>
+			当前浏览器不支持 video直接播放，点击这里下载视频： <a href="/">下载视频</a>
+		</video>
+{% else %}
+        <video poster="" width="100%" height="100%" id="playVideo" controls="controls">
+			<source src="" type="video/mp4"></source>
+			当前浏览器不支持 video直接播放，点击这里下载视频： <a href="/">下载视频</a>
+		</video>
+        {% endif %}
+		<div class="playTip glyphicon glyphicon-play"></div>
+	</div>
+	<div class="playControll">
+		<div class="playPause playIcon"></div>
+		<div class="timebar">
+			<span class="currentTime">0:00:00</span>
+			<div class="progress">
+				<div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+				</div>
+			<span class="duration">0:00:00</span>
+		</div>
+		<div class="otherControl">
+			<span class="volume glyphicon glyphicon-volume-down"></span>
+			<span class="fullScreen glyphicon glyphicon-fullscreen"></span>
+			<div class="volumeBar">
+					<div class="volumewrap">
+						<div class="progress">
+						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 8px;height: 40%;"></div>
+					</div>
+						</div>
+				</div>
+		</div>
+	</div>
+</div>
+			
+		</div>
+	</div>
+</div>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+    <p><a>前往Google Store下载此应用</a></p>
+     <p><a href="/"><img src="/static/vedioplay/images/timg.jpeg" width=40% title="前往Google Store"></a></p>
+{#<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>#}
+</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<tr>
+    <td>
+        <div><img src="{% if obj.picture %}{{ obj.picture }}{% else %}{{ "https://s3-ap-southeast-1.amazonaws.com/duetin-user-tx/default-tx.jpg" }}{% endif %}"
+                  width="25" height="25"></div>
+    </td>
+    <td>{% if obj.username %}{{ obj.username }}{% else %}{{ "" }}{% endif %}</td>
+
+    <td>{% if obj.sex == 0 %}
+        <div id="labsex{{ obj.id }}">{{ "男" }}</div>{% elif obj.sex == 1 %}<div id="labsex{{ obj.id }}">{{ "女" }}</div>{% else %}
+        <div id="labsex{{ obj.id }}">{{ "" }}</div>{% endif %}</td>
+
+    <td>{% if obj.birth %}<div id="labbirth{{ obj.id }}">{{ obj.birth }}</div>{% else %}<div id="labbirth{{ obj.id }}">{{ "" }}</div>{% endif %}</td>
+    <td>{% if obj.email %}{{ obj.email }}{% else %}{{ "" }}{% endif %}</td>
+    <td> {{ obj.created_at }}</td>
+    <td>{% if obj.last_login %}{{ obj.last_login }}{% else %}{{ "" }}{% endif %}</td>
+
+
+    <td><div id="labs{{ obj.id }}">{{ obj.add_user_rank }}</div></td>
+<td>{% if obj.is_important %}
+        <div id="labv{{ obj.id }}">{{ "V" }}</div>{% else %}
+        <div id="labv{{ obj.id }}">{{ "" }}</div>{% endif %}</td>
+
+    <td>{% if obj.is_recommend %}
+        <div id="labr{{ obj.id }}">{{ "已推荐" }}</div>{% else %}
+        <div id="labr{{ obj.id }}">{{ "" }}</div>{% endif %}</td>
+    <td>
+        <div id="labn{{ obj.id }}">{{ obj.new_user_rank }}</div>
+    </td>
+
+    <td>{% if obj.is_active %}
+        <div id="laba{{ obj.id }}">{{ "YES" }}</div>{% else %}
+        <div id="laba{{ obj.id }}" style="color: red">{{ "NO" }}</div>{% endif %}</td>
+
+    <td><a title="更改" href="#delModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+
+        <div class="modal small fade" id="delModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="editmodelform{{ obj.id }}" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改用户信息</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改用户 <a
+                                    style="color: red">{{ obj.username }}</a>信息<br>
+                            </p> <br> <br>
+
+                            <div><label style="width: 120px"><a>性别:</a></label>
+                                <select name="sex" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.sex == 0 %}
+                                        <option id="d" selected="selected" value=0>男</option>
+
+                                    {% elif obj.sex == 1 %}
+                                        <option id="d" selected="selected" value=1>女</option>
+                                        {% else %}
+                                        <option id="d" selected="selected" value=9></option>
+
+                                    {% endif %}
+                                    <option id="d" value="0">男</option>
+                                    <option id="d" value="1">女</option>
+                                </select>
+
+                            </div>
+
+                            <div><label style="width: 120px"><a>生日:</a></label>
+                                <input type="text" name="birth" value={% if obj.birth %}{{ obj.birth }}{% else %}{{ "" }}{% endif %}>
+                             </div>
+
+                             <div><label style="width: 120px"><a>添加好友排序:</a></label>
+                                <input type="text" name="addusersort" value="{{ obj.add_user_rank }}" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
+                             </div>
+
+
+                            <div><label style="width: 120px"><a>是否大V:</a></label>
+                                <select name="v" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.is_important %}
+                                        <option id="d" selected="selected" value=1>是</option>
+
+                                    {% else %}
+                                        <option id="d" selected="selected" value=0>否</option>
+                                    {% endif %}
+                                    <option id="d" value="1">是</option>
+                                    <option id="d" value="0">否</option>
+                                </select>
+                            </div>
+
+                        <div><label style="width: 120px"><a>是否推荐给新用户:</a></label>
+                                <select name="r" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.is_recommend %}
+                                        <option id="d" selected="selected" value=1>是</option>
+                                    {% else %}
+                                        <option id="d" selected="selected" value=0>否</option>
+                                    {% endif %}
+                                    <option id="d" value="1">是</option>
+                                    <option id="d" value="0">否</option>
+                                </select>
+                            </div>
+
+
+                        <div><label style="width: 120px"><a>新用户推荐排序:</a></label>
+                                <input type="text" name="newusersort" value="{{ obj.new_user_rank }}" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
+                             </div>
+                            <div><label style="width: 120px"><a>是否允许登录:</a></label>
+                                <select name="a" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.is_active %}
+                                        <option id="d" selected="selected" value=1>是</option>
+
+                                    {% else %}
+                                        <option id="d" selected="selected" value=0>否</option>
+                                    {% endif %}
+                                    <option id="d" value=1>是</option>
+                                    <option id="d" value=0>否</option>
+                                </select>
+                            </div>
+
+
+                            <input type="hidden" name="__next__" value="{{ page }}">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal" onclick="editform('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+</tr>
+
+<script type="text/javascript">
+    function editform(data) {
+        $.ajax({
+
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/edituser/" + data + "/",
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+
+                $("#laba" + data + "").text(res_data.result['a']);
+
+                $("#labv" + data + "").text(res_data.result['v']);
+                $("#labs" + data + "").text(res_data.result['s']);
+                $("#labr" + data + "").text(res_data.result['r']);
+                $("#labn" + data + "").text(res_data.result['n']);
+                $("#labbirth" + data + "").text(res_data.result['r_birth']);
+                $("#labsex" + data + "").text(res_data.result['r_sex']);
+
+
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+</script>

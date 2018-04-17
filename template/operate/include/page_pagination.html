@@ -1,0 +1,50 @@
+<nav id="pc_pagination" class="text-center">
+    <ul class="pagination">
+
+        {% if page > 1 %}
+            <li><a href="?page={{ page_pre }}&S={{ search_word.S }}&WT={{ search_word.WT }}&WB={{ search_word.WB }}&WS={{ search_word.WS }}" aria-label="Previous"><span
+                    aria-hidden="true">&laquo;</span></a></li>
+        {% else %}
+            <li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+        {% endif %}
+
+        {% if page > 5 %}
+            <li><a href="?page={{ 1 }}&S={{ search_word.S }}&WT={{ search_word.WT }}&WB={{ search_word.WB }}&WS={{ search_word.WS }}">1 </a></li>
+            <li><a>...</a></li>
+        {% endif %}
+        {% ifequal page 5 %}
+            <li><a href="?page={{ 1 }}&S={{ search_word.S }}&WT={{ search_word.WT }}&WB={{ search_word.WB }}&WS={{ search_word.WS }}">1 </a></li>
+        {% endifequal %}
+
+
+
+        {% for page_l in page_list %}
+
+            {% ifequal page_l page %}
+                <li class="active"><a>{{ page }} <span class="sr-only">(current)</span></a></li>
+            {% else %}
+                <li><a href="?page={{ page_l }}&S={{ search_word.S }}&WT={{ search_word.WT }}&WB={{ search_word.WB }}&WS={{ search_word.WS }}">{{ page_l }} </a></li>
+            {% endifequal %}
+
+        {% endfor %}
+
+
+        {% if total > 7 %}
+            {% if page|add:'3' < total %}
+                <li><a>...</a></li>
+                <li><a href="?page={{ total }}">{{ total }} </a></li>
+            {% else %}
+
+            {% endif %}
+
+        {% endif %}
+        {% if page < total %}
+            <li><a href="?page={{ page|add:'1' }}&S={{ search_word.S }}&WT={{ search_word.WT }}&WB={{ search_word.WB }}&WS={{ search_word.WS }}" aria-label="Next"><span
+                    aria-hidden="true">&raquo;</span></a></li>
+        {% else %}
+            <li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+        {% endif %}
+
+
+    </ul>
+</nav>

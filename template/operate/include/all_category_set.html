@@ -1,0 +1,107 @@
+<script type="text/javascript" src="/static/operate/jquery-1.2.6.pack.js"></script>
+<script> var jq126 = $.noConflict(true); </script>
+<script type="text/javascript" src="/static/operate/jquery.imagePreview.1.0.js"></script>
+<script type="text/javascript">
+
+    jq126(function () {
+
+        $("a.preview").preview();
+    });
+
+</script>
+
+<tr>
+    <td>{{ obj.id }}</td>
+    <td>{% if obj.name %}<div id="labname{{ obj.id }}">{{ obj.name }}</div>{% else %}<div id="labname">{{ "" }}</div>{% endif %}</td>
+    <td><div id="labrank{{ obj.id }}">{{ obj.rank }}</div></td>
+
+    <td>{% if obj.is_online %} <div id="labonline{{ obj.id }}">显示</div> {% else %}<div style="color: red" id="labonline{{ obj.id }}">不显示</div>{% endif %}</td>
+
+    <td><a title="更改" href="#editModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+
+        <div class="modal small fade" id="editModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="editmodelform{{ obj.id }}" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改类别信息</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改 <a
+                                    style="color: red">{{ obj.name }}</a>信息<br>
+                            </p> <br> <br>
+                        <div><label style="width: 20%"><a>名称:</a></label><input style="width: 70%" type="text" name="name"
+                                                                                        value="{{ obj.name }}"></div>
+                        <br>
+                            <div><label style="width: 20%"><a>排序:</a></label><input style="width: 30%" type="text" name="rank"
+                                                                                        value="{{ obj.rank }}" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/"></div>
+
+                        <br>
+                            <div><label style="width: 20%"><a>是否显示:</a></label>
+                                <select name="is_online" style="width:30%;height: 24px;overflow: hidden;">
+
+
+                                    <option id="d" selected="selected"
+                                            value="{% if obj.is_online %}{{ "1" }}{% else %}{{ "0" }}{% endif %}">{% if obj.is_online %}{{ "显示" }}{% else %}{{ "不显示" }}{% endif %}</option>
+                                    <option id="d"
+                                            value="1">显示
+                                    </option>
+                                    <option id="d"
+                                            value="0">不显示
+                                    </option>
+
+                                    {% for category in obj_singer %}
+                                        <option id="d" value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+
+
+                                </select>
+                            </div>
+                            <input type="hidden" name="__next__" value="{{ page }}">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal"
+                                    onclick="editform('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+</tr>
+
+<script type="text/javascript">
+    function editform(data) {
+
+        $.ajax({
+
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/editcategory_set/" + data + "/",
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+
+                $("#labrank" + data + "").text(res_data.result['rank']);
+                $("#labname" + data + "").text(res_data.result['name']);
+                $("#labonline" + data + "").text(res_data.result['isonline']);
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+
+</script>

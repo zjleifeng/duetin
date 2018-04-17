@@ -1,0 +1,98 @@
+<script type="text/javascript" src="/static/operate/jquery-1.2.6.pack.js"></script>
+<script> var jq126 = $.noConflict(true); </script>
+<script type="text/javascript" src="/static/operate/jquery.imagePreview.1.0.js"></script>
+<script type="text/javascript">
+
+    jq126(function () {
+
+        $("a.preview").preview();
+    });
+
+</script>
+
+<tr>
+    <td>{{ obj.id }}</td>
+    <td>
+
+        <a class="preview" name="{{ obj.photo }}">
+            <img width="25" src="https://s3-ap-southeast-1.amazonaws.com/duetin/favicon.png"/>
+        </a>
+
+    </td>
+
+    <td>
+
+        <a title="播放" href="#playModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-play-circle"></i></a>
+
+        <div class="modal small fade" id="playModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+
+                    <div id="{{ obj.id }}"></div>
+                    <script type="text/javascript" src="/static/operate/ckplayer/ckplayer.js" charset="utf-8"></script>
+                    <script type="text/javascript">
+                        var flashvars = {
+                            f: '{{ obj.vedio }}',
+                            c: 0,
+                            p: 1
+                        };
+                        var params = {
+                            bgcolor: '#FFF',
+                            allowFullScreen: true,
+                            allowScriptAccess: 'always',
+                            wmode: 'transparent'
+                        };
+                        CKobject.embedSWF('/static/operate/ckplayer/ckplayer.swf', '{{ obj.id }}', 'ckplayer_{{ obj.id }}', '600', '400', flashvars, params);
+                    </script>
+
+
+                </div>
+            </div>
+        </div>
+
+    </td>
+
+
+    <td><a href="{{ obj.up_mp4_one }}" class="btn btn-default" download="视频1.mp4">下载</a></td>
+    <td><a href="{{ obj.up_aac_one }}" class="btn btn-default" download="音频1.aac">下载</a></td>
+    <td>{{ obj.trim_one }}</td>
+    <td><a href="{{ obj.up_mp4_two }}" class="btn btn-default" download="视频2.mp4">下载</a></td>
+    <td><a href="{{ obj.up_aac_two }}" class="btn btn-default" download="音频2.aac">下载</a></td>
+    <td>{{ obj.trim_two }}</td>
+
+    <td><a href="{{ obj.banzou }}" class="btn btn-default" download="伴奏.mp3">下载</a></td>
+    <td><a href="{{ obj.time_json }}" class="btn btn-default" download="sem_json.json">下载</a></td>
+
+
+    <td>{{ obj.part_to }}</td>
+
+</tr>
+
+
+<script type="text/javascript">
+    function editform(data) {
+        $.ajax({
+
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/editpost/" + data + "/",
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+
+                $("#labrank" + data + "").text(res_data.result['rank']);
+                $("#labcountrank" + data + "").text(res_data.result['view_count_rank']);
+                $("#labisenable" + data + "").text(res_data.result['isenable']);
+
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+
+</script>

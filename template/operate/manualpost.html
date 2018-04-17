@@ -1,0 +1,109 @@
+{% extends "./operate/base.html" %}
+{% url 'loaduser-view' as loaduser_url %}
+
+{% block content %}
+    <script type="text/javascript" src="/static/operate/js/wmadmin.js"></script>
+    {#    	<script type="text/javascript" src="/static/operate/js/jquery-latest.js"></script>#}
+    <script type="text/javascript" src="/static/operate/js/jquery.tablesorter.js"></script>
+    <div class="header">
+        <h1 class="page-title">{{ title }}</h1>
+
+    </div>
+    <div class="main-content">
+        <div class="btn-toolbar list-toolbar">
+            <form role="form" method="GET" action="{% url 'manualpostsearch-view' %}" style="float: left">
+                {% csrf_token %}
+                <input placeholder="请输入ID" type="text" class="form-control" id="s" name="S"
+                       style="width:200px;float: left;">
+
+
+
+
+                <input type="text" name="title" hidden="hidden" value={{ title }}>
+                <button class="btn btn-primary">搜 索</button>
+                {#      {% if count %}#}
+                {#      一共搜索到 <a style="color: red">{{ count }}</a> 条记录 |  {% endif %}共<a style="color: red"> {{ obj_list|length }} </a>条#}
+            </form>
+            <div style="float: right"><a href="#" class="btn btn-default" onclick="msg()">导入数据</a>
+                <input id="openexcelfile" type="file" name="openexcelfile" style="display: none;"/>
+                <a href="#" class="btn btn-default" onclick="msg()">导出数据</a>
+                <input id="yourinputname" type="file" name="yourinputname" value="上传" style="display: none;"/>
+            </div>
+            <div class="btn-group"></div>
+        </div>
+        <table id="mytttt" class="table table-striped table-bordered table-hover tablesorter">
+            <thead>
+            <tr>
+                <th width="4%">ID</th>
+                <th width="4%">图片</th>
+                <th width="4%">播放</th>
+                <th width="10%">原始视频1</th>
+                <th width="10%">原始音频1</th>
+                <th width="10%">视频1延迟数</th>
+                <th width="10%">原始视频2</th>
+                <th width="10%">原始音频2</th>
+                <th width="10%">视频2延迟数</th>
+                <th width="10%">伴奏文件</th>
+                <th width="10%">JSON文件</th>
+                <TH width="10%">合成模式</TH>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+            {% if obj_list %}
+                {% for obj in obj_list %}
+
+                    {% include "./operate/include/all_manualpost.html" %}
+                {% endfor %}
+
+
+            {% endif %}
+            </tbody>
+
+        </table>
+
+        {#<script type="text/javascript">#}
+        {#$("#myTable").tablesorter();#}
+        {#//无id时，可以用 $(".tablesorter").tablesorter();#}
+        {#</script>#}
+        <script>
+
+            function msg() {
+                layer.msg('暂不支持此功能<br>请联系开发！', {
+                    time: 5000, //5s后自动关闭
+                    btn: ['明白了']
+                });
+            }
+            function submitFormdel(e) {
+
+                document.getElementById("delmodelform" + e).submit();
+
+            }
+            function submitFormedit(e) {
+
+                document.getElementById("editmodelform" + e).submit();
+
+            }
+
+            function del_userjs() {
+                var getid = document.getElementById("asset").innerHTML;
+
+                layer.confirm('确认删除资产：（' + getid + "）    吗？", {icon: 3, title: '提示:删除后不可恢复！'}, function (index) {
+                    //do something
+                    $("#del_user").submit();
+                    layer.close(index);
+                });
+
+
+            }
+
+        </script>
+
+        <!--分页 -->
+
+        {% if total %}
+            <div style="position:absolute;bottom:0px;"> {% include 'operate/include/page_pagination.html' %} </div>
+        {% endif %} </div>
+{% endblock %}

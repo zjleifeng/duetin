@@ -1,0 +1,85 @@
+<tr>
+    <td>
+        <div><img src="
+
+
+                {% if obj.photo %}{{ obj.photo }}{% else %}{{ "https://s3-ap-southeast-1.amazonaws.com/duetin-user-tx/default-tx.jpg" }}{% endif %}"
+                  width="25" height="25"></div>
+    </td>
+    <td>{% if obj.music_name %}{{ obj.music_name }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% if obj.singer %}
+        {% for name in obj.singer %}
+            {{ name.singer_name }}<br>
+        {% endfor %}
+    {% endif %}</td>
+    <td>{% if obj.uid %}{{ obj.uid }}{% else %}{{ "" }}{% endif %}</td>
+    <td> {{ obj.rank }}</td>
+
+    <td>{{ obj.view_count }}</td>
+    <td>{% if obj.music_style %}{{ obj.music_style }}{% else %}{{ "" }}{% endif %}</td>
+
+    <td> {% if obj.is_loved %}<a style="color: red">YES</a>{% else %}{% endif %}</td>
+    <td>
+        <div id="labnewsort{{ obj.id }}">{{ obj.new_sort }}</div>
+    </td>
+    <td><a title="更改" href="#delModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+
+        <div class="modal small fade" id="delModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="editmodelform{{ obj.id }}" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改歌曲信息</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改歌曲 <a
+                                    style="color: red">{{ obj.music_name }}(uid:{{ obj.uid }})</a>信息<br>
+                            </p> <br> <br>
+                            <div><label style="width: 120px"><a>推荐排序值:</a></label><input type="text" name="new_sort"
+                                                                                         value="{{ obj.new_sort }}"
+                                                                                         onkeyup="value=value.replace(/[^\d]/g,'') "
+                                                                                         ng-pattern="/[^a-zA-Z]/"></div>
+
+                            <input type="hidden" name="__next__" value="{{ page }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal" onclick="editform('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+</tr>
+
+<script type="text/javascript">
+    function editform(data) {
+        $.ajax({
+
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/editnewsing-recommend/" + data + "/",
+
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+                $("#labnewsort" + data + "").text(res_data.result['new_sort']);
+
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+
+</script>

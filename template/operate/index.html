@@ -1,0 +1,51 @@
+{% extends "./operate/base.html" %}
+
+{% block content %}
+<div class="panel panel-default"> <a href="#page-stats" class="panel-heading" data-toggle="collapse">Latest Stats</a>
+  <div id="page-stats" class="panel-collapse panel-body collapse in">
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <div class="knob-container">
+          <input  class="knob" data-width="200" data-min="0" data-max="100" data-displayPrevious="true" value="100" data-fgColor="#92A3C2" data-readOnly=true;>
+          <h3 class="text-muted text-center"><a href="/operate/userrecord/" >用户管理</a></h3>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="knob-container">
+          <input class="knob" data-width="200" data-min="0" data-max="100" data-displayPrevious="true" value="100" data-fgColor="#92A3C2" data-readOnly=true;>
+          <h3 class="text-muted text-center"><a href="/operate/musicrecord/">歌曲管理</a></h3>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="knob-container">
+          <input class="knob" data-width="200" data-min="0" data-max="100" data-displayPrevious="true" value="100" data-fgColor="#92A3C2" data-readOnly=true;>
+          <h3 class="text-muted text-center"><a href="/operate/postrecord/">作品管理</a></h3>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="knob-container">
+          <input class="knob" data-width="200" data-min="0" data-max="100" data-displayPrevious="true" value="100" data-fgColor="#92A3C2" data-readOnly=true;>
+          <h3 class="text-muted text-center"><a href="/operate/recommend/">推荐管理</a></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{#<footer>#}
+{#  <hr>#}
+{#  <p>© 2014 <a href="#" target="_blank">Portnine</a></p>#}
+{#</footer>#}
+{% endblock %}
+
+
+  <script>
+
+  function submitFormdb() {
+
+                document.getElementById("delmodelform").submit();
+
+     }
+
+</script>

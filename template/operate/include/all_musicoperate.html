@@ -1,0 +1,106 @@
+<tr>
+    <td>
+        <div><img src="
+
+
+
+
+                {% if obj.photo %}{{ obj.photo }}{% else %}{{ "https://s3-ap-southeast-1.amazonaws.com/duetin-user-tx/default-tx.jpg" }}{% endif %}"
+                  width="25" height="25"></div>
+    </td>
+    <td>{% if obj.music_name %}{{ obj.music_name }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% if obj.singer %}
+        {% for name in obj.singer %}
+            {{ name.singer_name }}<br>
+        {% endfor %}
+    {% endif %}</td>
+    <td>{% if obj.uid %}{{ obj.uid }}{% else %}{{ "" }}{% endif %}</td>
+    <td> {{ obj.rank }}</td>
+    <td>{{ obj.part_a_count }}</td>
+    <td>{{ obj.part_b_count }}</td>
+    <td>{{ obj.sort }}</td>
+    <td>{{ obj.new_sort }}</td>
+
+    <td>{% if obj.music_style %}{{ obj.music_style }}{% else %}{{ "" }}{% endif %}</td>
+<td>{{ obj.view_count }}</td>
+    <td> {% if obj.is_loved %}<a style="color: red">YES</a>{% else %}{% endif %}</td>
+{#    <td><a title="更改" href="#delModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>#}
+
+        <div class="modal small fade" id="delModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="delmodelform{{ obj.id }}" method="post" action="/operate/editmusic/{{ obj.id }}/">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改歌曲信息</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改歌曲 <a
+                                    style="color: red">{{ obj.music_name }}(uid:{{ obj.uid }})</a>信息<br>
+                            </p> <br> <br>
+                            <div><label style="width: 120px"><a>手动排序:</a></label><input type="text" name="sort"
+                                                                                        value="{{ obj.sort }}"></div>
+                            <div><label style="width: 120px"><a>NEW页面手动排序:</a></label><input type="text" name="new_sort"
+                                                                                             value="{{ obj.new_sort }}">
+                            </div>
+
+
+                            <div><label style="width: 120px"><a>是否男女合唱:</a></label>
+                                <select name="is_loved" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.is_loved %}
+                                        <option id="d" selected="selected" value="1">是</option>
+
+                                    {% else %}
+                                        <option id="d" selected="selected" value="0">否</option>
+                                    {% endif %}
+                                    <option id="d" value="1">是</option>
+                                    <option id="d" value="0">否</option>
+                                </select>
+                            </div>
+
+                            <div><label style="width: 120px"><a>是否已经上线:</a></label>
+                                <select name="is_online" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.is_online %}
+                                        <option id="d" selected="selected" value="1">是</option>
+
+                                    {% else %}
+                                        <option id="d" selected="selected" value="0">否</option>
+                                    {% endif %}
+                                    <option id="d" value="1">是</option>
+                                    <option id="d" value="0">否</option>
+                                </select>
+                            </div>
+                            <div><label style="width: 120px"><a>歌曲类型:</a></label>
+                                <select name="style" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    <option id="l" selected="selected"
+                                            value="">{{ obj.music_style }}</option>
+
+                                    <option id="l" value="0">MELODY</option>
+                                    <option id="l" value="1">RAP</option>
+                                    <option id="l" value="2">Rap&Melody</option>
+                                    <option id="l" value="9">Undefined</option>
+
+                                </select>
+                            </div>
+                            <input type="hidden" name="__next__" value="{{ page }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal" onclick="submitForm('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+</tr>
+

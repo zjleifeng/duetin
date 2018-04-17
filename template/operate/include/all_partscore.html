@@ -1,0 +1,200 @@
+<script type="text/javascript" src="/static/operate/jquery-1.2.6.pack.js"></script>
+<script> var jq126 = $.noConflict(true); </script>
+<script type="text/javascript" src="/static/operate/jquery.imagePreview.1.0.js"></script>
+<script type="text/javascript">
+
+    jq126(function () {
+
+        $("a.preview").preview();
+    });
+
+</script>
+
+<tr>
+    <td>{{ obj.id }}</td>
+    <td>
+        <a class="preview" name="{{ obj.photo }}" title="{{ obj.auth_part_username }}:{{ obj.music_info.music_name }}">
+            <img width="25" src="https://s3-ap-southeast-1.amazonaws.com/duetin/favicon.png"/>
+        </a>
+
+    </td>
+
+    <td>
+
+        <a title="播放" href="#playModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-play-circle"></i></a>
+
+        <div class="modal small fade" id="playModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+
+                    <div id="{{ obj.id }}"></div>
+                    <script type="text/javascript" src="/static/operate/ckplayer/ckplayer.js" charset="utf-8"></script>
+                    <script type="text/javascript">
+                        var flashvars = {
+                            f: '{{ obj.part_vedio_url }}',
+                            c: 0,
+                            p: 1
+                        };
+                        var params = {
+                            bgcolor: '#FFF',
+                            allowFullScreen: true,
+                            allowScriptAccess: 'always',
+                            wmode: 'transparent'
+                        };
+                        CKobject.embedSWF('/static/operate/ckplayer/ckplayer.swf', '{{ obj.id }}', 'ckplayer_{{ obj.id }}', '600', '400', flashvars, params);
+                    </script>
+
+
+                </div>
+            </div>
+        </div>
+
+    </td>
+
+
+    <td>{% if obj.music_info %}{{ obj.music_info.music_name }}{% else %}{{ "" }}{% endif %}</td>
+
+<td>{% if obj.music_info.singer %}
+        {% for name in obj.music_info.singer %}
+            {{ name.singer_name }}<br>
+        {% endfor %}
+    {% endif %}</td>
+    <td>{% if obj.auth_part_username %}{{ obj.auth_part_username }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% ifequal obj.part 1 %}{{ "B" }}{% else %}{{ "A" }}{% endifequal %}</td>
+
+    <!--<td>{{ obj.music_info.music_style }}</td>-->
+    <!--<td><div id="labratingscale{{ obj.id }}">{{ obj.h_rating_scale }}</div></td>-->
+
+
+    <td>{{ obj.created_time }}</td>
+    <td>{% if obj.is_enable %}
+        <div id="labisenable{{ obj.id }}">{{ "是" }}</div>{% else %}
+        <div id="labisenable{{ obj.id }}" style="color: red">{{ "否" }}</div>{% endif %}</td>
+
+    <td><a title="更改" href="#editModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+
+        <div class="modal small fade" id="editModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="editmodelform{{ obj.id }}" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改歌曲信息</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改作品 <a
+                                    style="color: red">{{ obj.auth_part_username }}:{{ obj.music_info.music_name }}</a>信息<br>
+                            </p> <br> <br>
+
+
+
+                            <div><label style="width: 120px"><a>是否允许:</a></label>
+                                <select name="is_enable" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.is_enable %}
+                                        <option id="d" selected="selected" value=1>允许</option>
+
+                                    {% else %}
+                                        <option id="d" selected="selected" value=0>不允许</option>
+                                    {% endif %}
+                                    <option id="d" value="0">不允许</option>
+                                    <option id="d" value="1">允许</option>
+                                </select>
+                            </div>
+
+                            <!--<div><label style="width: 120px"><a>星级:</a></label>-->
+                                <!--<select name="rating_scale" style="width:150px;height: 24px;overflow: hidden;">-->
+
+
+                                    <!--<option id="d" selected="selected"-->
+                                            <!--value=1>{{ obj.h_rating_scale }}</option>-->
+
+
+                                    <!--<option id="d" value="1">A</option>-->
+                                    <!--<option id="d" value="2">B</option>-->
+                                    <!--<option id="d" value="3">C</option>-->
+                                    <!--<option id="d" value="4">D</option>-->
+                                    <!--<option id="d" value="5">E</option>-->
+
+                                <!--</select>-->
+                            <!--</div>-->
+
+                        <input type="hidden" name="__next__" value="{{ request.META.HTTP_REFERER }}">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal"
+                                    onclick="editform('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+    <td><a title="删除" href="#delModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+    </td>
+    <div class="modal small fade" id="delModal{{ obj.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <form id="delmodelform{{ obj.id }}" method="post" action="/operate/delpartpost/{{ obj.id }}/">
+            {% csrf_token %}
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <a style="color:red;font-size: x-large">删除作品</a></div>
+                    <div class="modal-body">
+                        <p class="error-text"><i
+                                class="fa fa-warning modal-icon"></i>您确定要删除 {{ obj.auth_part_username }}的作品<a
+                                style="color: red">ID:{{ obj.id }} </a>:{{ obj.music_info.music_name }}<br>
+                            删除后将不可恢复！谨慎操作</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" data-dismiss="modal" onclick="submitFormdel('{{ obj.id }}');">
+                            Delete
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</tr>
+
+
+
+<script type="text/javascript">
+    function editform(data) {
+        $.ajax({
+
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/editpartscore/" + data + "/",
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+
+//                $("#labratingscale" + data + "").text(res_data.result['scale']);
+                $("#labisenable" + data + "").text(res_data.result['isenable']);
+
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+
+</script>

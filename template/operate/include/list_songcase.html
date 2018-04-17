@@ -1,0 +1,125 @@
+<script type="text/javascript" src="/static/operate/jquery-1.2.6.pack.js"></script>
+<script> var jq126 = $.noConflict(true); </script>
+<script type="text/javascript" src="/static/operate/jquery.imagePreview.1.0.js"></script>
+<script type="text/javascript">
+
+    jq126(function () {
+
+        $("a.preview").preview();
+    });
+
+</script>
+
+<tr>
+    <td>{{ obj.id }}</td>
+    <td>{% if obj.song_name %}{{ obj.song_name }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% if obj.singer_name %}{{ obj.singer_name }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{% if obj.h_case_option %}{{ obj.h_case_option }}{% else %}{{ "" }}{% endif %}</td>
+    <td>{{ obj.description }}</td>
+    <td>{% if obj.is_settle %}<div id="testa{{ obj.id }}">{{ "已处理" }}</div>{% else %}<div id="testa{{ obj.id }}" style="color: red">{{ "未处理" }}</div>{% endif %}</td>
+
+    <td><a title="更改" href="#editModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+
+        <div class="modal small fade" id="editModal{{ obj.id }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <form id="editmodelform{{ obj.id }}" method="post" action="#">
+                {% csrf_token %}
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <a style="color:red;font-size: x-large">修改提交信息</a></div>
+                        <div class="modal-body">
+
+                            <p class="error-text"><i class="fa fa-warning modal-icon"></i>您确定要修改 <a
+                                    style="color: red">{{ obj.singer_name }}:{{ obj.song_name }}</a>信息<br>
+                            </p> <br> <br>
+
+
+                            <div><label style="width: 120px"><a>是否处理:</a></label>
+                                <select name="is_settle" style="width:150px;height: 24px;overflow: hidden;">
+
+                                    {% if obj.is_settle %}
+                                        <option id="d" selected="selected" value=1>已处理</option>
+
+                                    {% else %}
+                                        <option id="d" selected="selected" value=0>未处理</option>
+                                    {% endif %}
+                                    <option id="d" value="1">已处理</option>
+                                    <option id="d" value="0">未处理</option>
+                                </select>
+                            </div>
+
+
+                            <input type="hidden" name="__next__" value="{{ page }}">
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-dismiss="modal"
+                                    onclick="editform('{{ obj.id }}');">
+                                edit
+                            </button>
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </td>
+
+
+    <td><a title="删除" href="#delModal{{ obj.id }}" role="button" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
+    </td>
+    <div class="modal small fade" id="delModal{{ obj.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        {#        <form id="delmodelform{{ obj.id }}" method="post" action="/operate/delsongcase/{{ obj.id }}/">#}
+        <form id="delmodelform{{ obj.id }}" method="post" action="/operate/delsongcase/{{ obj.id }}/">
+
+            {% csrf_token %}
+            <input type="hidden" name="__next__" value="{{ page }}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <a style="color:red;font-size: x-large">删除报告</a></div>
+                    <div class="modal-body">
+                        <p class="error-text"><i
+                                class="fa fa-warning modal-icon"></i>您确定要删除 {{ obj.song_name }}的报告<a
+                                style="color: red">ID:{{ obj.id }} </a>:{{ obj.song_name }}<br>
+                            删除后将不可恢复！谨慎操作</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" data-dismiss="modal" onclick="submitFormdel('{{ obj.id }}');">
+                            Delete
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</tr>
+
+<script type="text/javascript">
+    function editform(data) {
+        $.ajax({
+
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/operate/editsongcase/" + data + "/",
+            data: $("#editmodelform" + data + "").serialize(),
+            success: function (res_data) {
+                $("#testa"+data+"").text(res_data.msg);
+
+            },
+            error: function () {
+                alert("异常！");
+            }
+        });
+    }
+</script>
+
