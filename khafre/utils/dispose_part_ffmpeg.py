@@ -145,7 +145,7 @@ def dispose_part_ffmpeg(event, context):
         return None
         # 上传到阿里OSS
         # try:
-        #     auth = oss2.Auth('LTAIXeFWeGVCQS3r', 'NNgpxxKyIfAr4J9RJ4N4AHlYvX7a9e')
+        #     auth = oss2.Auth('xx', 'xx')
         #
         #     bucket = oss2.Bucket(auth, 'oss-cn-shanghai.aliyuncs.com', 'duetin-part')
         #     with open(compose_vedio_path, 'rb') as fileobj:

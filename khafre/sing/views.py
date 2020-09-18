@@ -376,7 +376,7 @@ def dispose_all_ffmpeg(event, context):
         print "out_all_jpg_path:%s" % out_all_jpg_path
 
         try:
-            auth = oss2.Auth('LTAIXeFWeGVCQS3r', 'NNgpxxKyIfAr4J9RJ4N4AHlYvX7a9e')
+            auth = oss2.Auth('x', 'xx')
             print "shangchuan part"
             bucket_part = oss2.Bucket(auth, 'oss-cn-shanghai.aliyuncs.com', 'duetin-part')
             with open(part_music_vedio_path, 'rb') as filepart_v:
